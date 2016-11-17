@@ -1,0 +1,31 @@
+.attributes-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.attributes-section .attr-label {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.attributes-section .attr-value {
+    float: right;
+}
+
+.attributes-section .list-group-item:hover {
+    position: relative;
+}
+
+.attributes-section .list-group-item:hover .remove-btn {
+    display: block;
+}
+
+.attributes-section .remove-btn {
+    top: 3px;
+    right: 4px;
+    line-height: 1;
+    position: absolute;
+    display: none;
+    font-size: 0.9em;
+    padding: 0 6px;
+}

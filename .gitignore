@@ -1,6 +1,9 @@
 dependency.tree
 rebel.xml
 *.iml
+*.ipr
+*.iws
+*.ids
 .idea
 target/
 .classpath

@@ -80,6 +80,7 @@
   <servlet-mapping>
     <servlet-name>api</servlet-name>
     <url-pattern>/api/*</url-pattern>
+    <url-pattern>/gui/*</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>

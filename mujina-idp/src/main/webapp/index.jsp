@@ -41,6 +41,8 @@ ___  ___        _  _
 
 <h3>This page is not secured.</h3>
 
+<a href="${pageContext.request.contextPath}/gui/config">IDP configuration admin page</a> <br/><br/>
+
 <a href="user.jsp">protected IDP user page</a> <br/>
 <a href="admin.jsp">protected IDP admin page</a> <br/>
 <a href="j_spring_security_logout">End your session with the Identity Provider</a> <i>Does not end your session with the

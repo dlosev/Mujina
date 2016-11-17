@@ -42,6 +42,7 @@
     <intercept-url pattern="/admin.jsp" access="ROLE_ADMIN"/>
     <intercept-url pattern="/user.jsp" access="ROLE_USER"/>
 
+    <intercept-url pattern="/gui/*" access="ROLE_ADMIN"/>
   </http>
 
 
