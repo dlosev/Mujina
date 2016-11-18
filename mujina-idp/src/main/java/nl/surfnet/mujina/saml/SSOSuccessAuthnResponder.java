@@ -16,14 +16,6 @@
 
 package nl.surfnet.mujina.saml;
 
-import java.io.IOException;
-import java.net.URLDecoder;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import nl.surfnet.mujina.model.IdpConfiguration;
 import nl.surfnet.mujina.model.SimpleAuthentication;
 import nl.surfnet.mujina.saml.xml.AuthnResponseGenerator;
@@ -32,7 +24,7 @@ import nl.surfnet.mujina.spring.AuthnRequestInfo;
 import nl.surfnet.mujina.util.IDService;
 import nl.surfnet.mujina.util.TimeService;
 import nl.surfnet.spring.security.opensaml.SAMLMessageHandler;
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.joda.time.DateTime;
 import org.opensaml.saml2.core.Response;
@@ -50,6 +42,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.HttpRequestHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLDecoder;
 
 public class SSOSuccessAuthnResponder implements HttpRequestHandler {
 
@@ -131,7 +130,7 @@ public class SSOSuccessAuthnResponder implements HttpRequestHandler {
             acsEndpointURL = idpConfiguration.getAcsEndpoint().getUrl();
         }
         Response authResponse = authnResponseGenerator.generateAuthnResponse(remoteIP, authToken, acsEndpointURL,
-                responseValidityTimeInSeconds, info.getAuthnRequestID(), authnInstant, attributeJson, info.getEntityId());
+                responseValidityTimeInSeconds, info.getAuthnRequestID(), authnInstant, attributeJson, acsEndpointURL);
         Endpoint endpoint = endpointGenerator.generateEndpoint(org.opensaml.saml2.metadata.AssertionConsumerService.DEFAULT_ELEMENT_NAME,
                 acsEndpointURL, null);
 

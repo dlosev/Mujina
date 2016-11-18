@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:EntityDescriptor xmlns="http://www.w3.org/2000/09/xmldsig#" xmlns:ns2="urn:oasis:names:tc:SAML:2.0:metadata"
+                      xmlns:ns3="http://www.w3.org/2001/04/xmlenc#" xmlns:ns4="urn:oasis:names:tc:SAML:2.0:assertion"
+                      entityID="https://localhost:9443/samlsps/wps/">
+  <ns2:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true"
+                       protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <ns2:AssertionConsumerService index="0" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                                  Location="https://localhost:9443/samlsps/wps/"/>
+  </ns2:SPSSODescriptor>
+</ns2:EntityDescriptor>

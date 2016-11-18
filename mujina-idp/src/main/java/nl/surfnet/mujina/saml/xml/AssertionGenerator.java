@@ -16,23 +16,18 @@
 
 package nl.surfnet.mujina.saml.xml;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-
 import nl.surfnet.mujina.model.AuthenticationMethod;
 import nl.surfnet.mujina.model.IdpConfiguration;
 import nl.surfnet.mujina.model.SimpleAuthentication;
 import nl.surfnet.mujina.util.IDService;
 import nl.surfnet.mujina.util.TimeService;
-
+import org.apache.xml.security.utils.Base64;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.joda.time.DateTime;
+import org.opensaml.DefaultBootstrap;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.Audience;
 import org.opensaml.saml2.core.AudienceRestriction;
@@ -44,20 +39,34 @@ import org.opensaml.saml2.core.impl.AssertionBuilder;
 import org.opensaml.saml2.core.impl.AudienceBuilder;
 import org.opensaml.saml2.core.impl.AudienceRestrictionBuilder;
 import org.opensaml.saml2.core.impl.ConditionsBuilder;
+import org.opensaml.xml.ConfigurationException;
+import org.opensaml.xml.XMLObject;
+import org.opensaml.xml.XMLObjectBuilder;
 import org.opensaml.xml.XMLObjectBuilderFactory;
 import org.opensaml.xml.io.MarshallingException;
 import org.opensaml.xml.security.credential.Credential;
+import org.opensaml.xml.security.x509.X509Credential;
+import org.opensaml.xml.signature.KeyInfo;
 import org.opensaml.xml.signature.Signature;
 import org.opensaml.xml.signature.SignatureConstants;
 import org.opensaml.xml.signature.SignatureException;
 import org.opensaml.xml.signature.Signer;
+import org.opensaml.xml.signature.X509Certificate;
+import org.opensaml.xml.signature.X509Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.namespace.QName;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Arrays.asList;
 
 public class AssertionGenerator {
   private static final Logger logger = LoggerFactory.getLogger(AssertionGenerator.class);
+  private static boolean isBootStrapped = false;
   private final XMLObjectBuilderFactory builderFactory = org.opensaml.Configuration.getBuilderFactory();
 
   private final IssuerGenerator issuerGenerator;
@@ -70,7 +79,7 @@ public class AssertionGenerator {
   private IdpConfiguration idpConfiguration;
 
   public AssertionGenerator(final Credential signingCredential, String issuingEntityName, TimeService timeService, IDService idService,
-      IdpConfiguration idpConfiguration) {
+                            IdpConfiguration idpConfiguration) {
     super();
     this.signingCredential = signingCredential;
     this.timeService = timeService;
@@ -81,14 +90,14 @@ public class AssertionGenerator {
   }
 
   public Assertion generateAssertion(String remoteIP, SimpleAuthentication authToken, String recipientAssertionConsumerURL,
-      int validForInSeconds, String inResponseTo, DateTime authnInstant, String attributeJson, String requestingEntityId) {
+                                     int validForInSeconds, String inResponseTo, DateTime authnInstant, String attributeJson, String requestingEntityId) {
 
     AssertionBuilder assertionBuilder = (AssertionBuilder) builderFactory.getBuilder(Assertion.DEFAULT_ELEMENT_NAME);
     Assertion assertion = assertionBuilder.buildObject();
 
     String name = authToken.getName();
     Subject subject = subjectGenerator.generateSubject(recipientAssertionConsumerURL, validForInSeconds, name, inResponseTo,
-        remoteIP);
+      remoteIP);
 
     Issuer issuer = issuerGenerator.generateIssuer();
 
@@ -126,7 +135,11 @@ public class AssertionGenerator {
     assertion.setID(idService.generateID());
     assertion.setIssueInstant(timeService.getCurrentDateTime());
 
-    signAssertion(assertion);
+    try {
+      signAssertion(assertion);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
 
     return assertion;
   }
@@ -148,14 +161,26 @@ public class AssertionGenerator {
     return result;
   }
 
-  private void signAssertion(final Assertion assertion) {
+  private void signAssertion(final Assertion assertion) throws Exception {
 
     Signature signature = (Signature) org.opensaml.Configuration.getBuilderFactory().getBuilder(Signature.DEFAULT_ELEMENT_NAME)
-        .buildObject(Signature.DEFAULT_ELEMENT_NAME);
+      .buildObject(Signature.DEFAULT_ELEMENT_NAME);
 
     signature.setSigningCredential(signingCredential);
     signature.setSignatureAlgorithm(idpConfiguration.getSignatureAlgorithm());
     signature.setCanonicalizationAlgorithm(SignatureConstants.ALGO_ID_C14N_EXCL_OMIT_COMMENTS);
+
+    KeyInfo keyInfo = (KeyInfo) buildXMLObject(KeyInfo.DEFAULT_ELEMENT_NAME);
+    X509Data data = (X509Data) buildXMLObject(X509Data.DEFAULT_ELEMENT_NAME);
+    X509Certificate cert = (X509Certificate) buildXMLObject(org.opensaml.xml.signature.X509Certificate.DEFAULT_ELEMENT_NAME);
+
+    String value = Base64.encode(((X509Credential) signingCredential).getEntityCertificate().getEncoded());
+    cert.setValue(value);
+
+    data.getX509Certificates().add(cert);
+    keyInfo.getX509Datas().add(data);
+
+    signature.setKeyInfo(keyInfo);
 
     assertion.setSignature(signature);
 
@@ -168,6 +193,30 @@ public class AssertionGenerator {
       Signer.signObject(signature);
     } catch (SignatureException e) {
       e.printStackTrace();
+    }
+  }
+
+  private static XMLObject buildXMLObject(QName objectQName) {
+    doBootstrap();
+    XMLObjectBuilder builder =
+      org.opensaml.xml.Configuration.getBuilderFactory()
+        .getBuilder(objectQName);
+    if (builder == null) {
+      throw new RuntimeException("Unable to retrieve builder for object QName " +
+        objectQName);
+    }
+    return builder.buildObject(objectQName.getNamespaceURI(), objectQName.getLocalPart(),
+      objectQName.getPrefix());
+  }
+
+  public static void doBootstrap() {
+    if (!isBootStrapped) {
+      try {
+        DefaultBootstrap.bootstrap();
+        isBootStrapped = true;
+      } catch (ConfigurationException e) {
+        throw new RuntimeException("Error in bootstrapping the OpenSAML2 library", e);
+      }
     }
   }
 

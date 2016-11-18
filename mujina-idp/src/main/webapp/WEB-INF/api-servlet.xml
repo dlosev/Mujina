@@ -26,6 +26,10 @@
 
   <context:component-scan base-package="nl.surfnet.mujina.controllers"/>
 
+  <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+    <property name="location" value="classpath:mujina-idp.properties"/>
+  </bean>
+
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     <property name="prefix" value="/WEB-INF/jsp/"/>
