@@ -1,0 +1,50 @@
+<md:EntityDescriptor ID="v9Tpj.gYcPUeJx_FYLSZhfBC_Fq" cacheDuration="PT1440M" entityID="sso-dev.mbopartners.com:saml2"
+                     xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">
+  <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+    <ds:SignedInfo>
+      <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+      <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+      <ds:Reference URI="#v9Tpj.gYcPUeJx_FYLSZhfBC_Fq">
+        <ds:Transforms>
+          <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+          <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+        </ds:Transforms>
+        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+        <ds:DigestValue>iFJA4X3Z8X7FzU3N/YtmTEE4XTo=</ds:DigestValue>
+      </ds:Reference>
+    </ds:SignedInfo>
+    <ds:SignatureValue>
+      Dd7uvAF+Hji7Bn+D4XRGWTKqwnXBMWSgEiOuHf2Glo44sI0OOzyANhnkPzz/Qz9Clpp6lrdExkgH
+      1Il1zunUsbnhnudVlRLlNvnrjGoWLRtIrSFF++6fEsUzpVvecA0TKrs/A8Gh9uNpG3cXlQMXaBQV
+      L7FfM3eE90+j2Udyb6DPBtrlUZaAV8922KOKEFhhjOiMDrrMkaJllG4Z80BlypVXuYUToLUOeBcT
+      a6bYsmvi2ZjXhqgaKgTa2pP6Je85UfnGjiz8/bkhOe7dhy5fN4IpLzyEJHBoRj56f1b8LD2W24Lr
+      5ZxSpQKCB71a6OK78NLQ6WGYS+hXPHgMrDTEvQ==
+    </ds:SignatureValue>
+  </ds:Signature>
+  <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"
+                       WantAuthnRequestsSigned="false">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+            MIIDdDCCAlygAwIBAgIGAT22JgqsMA0GCSqGSIb3DQEBBQUAMHsxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJWQTEQMA4GA1UEBxMHSGVybmRvbjEVMBMGA1UEChMMTUJPIFBhcnRuZXJzMRQwEgYDVQQLEwtEZXZlbG9wbWVudDEgMB4GA1UEAxMXc3NvLWRldi5tYm9wYXJ0bmVycy5jb20wHhcNMTMwMzI5MTIzNjE5WhcNMTUwMzI5MTIzNjE5WjB7MQswCQYDVQQGEwJVUzELMAkGA1UECBMCVkExEDAOBgNVBAcTB0hlcm5kb24xFTATBgNVBAoTDE1CTyBQYXJ0bmVyczEUMBIGA1UECxMLRGV2ZWxvcG1lbnQxIDAeBgNVBAMTF3Nzby1kZXYubWJvcGFydG5lcnMuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4KPO//Qmh3ouU6kvW4Vj4sJUU72hmrreSQPR5OhtKbAKauIgKPcmkFbkmoVrurPrQdfGZNit28iAa+kCtyV/3jtl+J750J0aeak+vtiUiN+qFgLkqgwS2XDwYE1hTSX3A8E3WCa9wTJhr/n9q3GEbABOHyrPuZUnl2N/6uXT5DIZWB2OFSUpUKL6KpAqBD17Fhmydtc2hwJ+Bai/uJKrINIgGkiEKsDEx5zraTS7WtXn1cU37uu7x1UuMTXML32xwWtDtRGkQap0WnG1eIHr7vzXHXnmD3oz0R+1tGKOtW7XInwWdk8GG0OBBu7h1Hw208bUonU1oah4W3bIYBcHTQIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQADzGLTNMXpWmpq2+6Lyboes0fWPEsTVcUoI+dzyBdjMPRMnl60teUma3+JsgGjGLJiyT0294wWr8PfiEjSH6r7sbw//QZII0TefhnZEs5TZMK2jt5V/k3qi1xeB0WOk/Oh2plyRl8a5da39zDqqJM/khJJDZItk+ZI6EF6n+lsg26PSKHuRu6Kpp+0jRpM5a7Pztdek/kSdlxx8Jl7TBoUgLmqcfV7MNmhC3uym4JvO4i2NTvrHfkGDbO3QHl9BOnSZYfCpfITS5WHjbNR82+eMjrVsAqnGNKRHE9QHI2V7mh6WeotQeeM6gxhh01EEOp9Cb9y8kbFyXmk4zyKjGqS
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                            Location="https://sso-dev.mbopartners.com:443/idp/SSO.saml2"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                            Location="https://sso-dev.mbopartners.com:443/idp/SSO.saml2"/>
+    <saml:Attribute Name="lastName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+                    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"/>
+    <saml:Attribute Name="screenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+                    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"/>
+    <saml:Attribute Name="emailAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+                    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"/>
+    <saml:Attribute Name="firstName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+                    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"/>
+  </md:IDPSSODescriptor>
+  <md:ContactPerson contactType="administrative"/>
+</md:EntityDescriptor>

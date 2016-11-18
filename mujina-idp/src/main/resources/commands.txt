@@ -1,0 +1,2 @@
+AdminTask.importSAMLIdpMetadata('-idpMetadataFileName /home/was/idp-metadata.xml -idpId 1 -ssoId 1 -signingCertAlias http://mock-idp')
+AdminConfig.save()

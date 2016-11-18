@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor ID="v9Tpj.gYcPUeJx_FYLSZhfBC_Fq" cacheDuration="PT1440M" entityID="http://mock-idp"
+                     xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">
+  <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"
+                       WantAuthnRequestsSigned="false">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+            MIIDoTCCAomgAwIBAgIJANcLz8p1561QMA0GCSqGSIb3DQEBCwUAMGcxCzAJBgNV
+            BAYTAlVTMQswCQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGluZ3RvbjEcMBoGA1UE
+            CgwTRGVmYXVsdCBDb21wYW55IEx0ZDEYMBYGA1UEAwwPaHR0cDovL21vY2staWRw
+            MB4XDTE2MTExODE5MDE0MVoXDTE2MTIxODE5MDE0MVowZzELMAkGA1UEBhMCVVMx
+            CzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMRwwGgYDVQQKDBNEZWZh
+            dWx0IENvbXBhbnkgTHRkMRgwFgYDVQQDDA9odHRwOi8vbW9jay1pZHAwggEiMA0G
+            CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDfw5BqQ6KXgr+WkBMb0QnR+mQYh9Tp
+            noBpqgv3cPsGJdMcWxZsWtzCISHA7RfpXbusgj+c2hrLAZLDtfOC2QjqBuMi1JpW
+            FXpStkka2GV7nRYa1twixYIeL0mhEWoSNMlC5/KrzdEXKe7xFhidIooF/ftzrpVO
+            VGeNT4o2MkzeDDJgPA8C0Pj8LUFbyYKbYtEQ3yBqLJfVCKNQz/W12xgv6/K2ciR8
+            Kbki4OqX+dDrSvOFcWNZhTdfhJTZfiQSGJgta29m4buu3GdDiJc9kvzuYtbJOrG3
+            l8VLg9wWnQHwJJ6PCv5MIunzra4zbKPxGgkKznMWFAsHk7tW9C7AgrQJAgMBAAGj
+            UDBOMB0GA1UdDgQWBBSY+T3GxS8UMX216hG4JtFc92k9mzAfBgNVHSMEGDAWgBSY
+            +T3GxS8UMX216hG4JtFc92k9mzAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUA
+            A4IBAQBMdZbFv9ElTT+3FzRAhaj/6TeKqDKSBV4eO0uH1xs3l2nJ/zLK77n0ow4Q
+            zU7cKyLDTgSFZluXaY/IORFHQch1qshoy7rsSI1b8+yJcOOnUd/6vszSdHdbAFXP
+            8K820VL5pVwwCmqj29WSi5xxc116O75GXiUhASegS0jndQk/un80BDX0lRhD/Bvp
+            hkV3Bi36vo9MH9oCmaju1CIjKD88tNELvlqzZrSkOYY4n04YENC/XOOaevKK35eR
+            B6HmQL7rrPL3zKm50T9WICwFc97ngY7HgpeJJayjSjPQq1+3tqrexdPzKqUMbM18
+            +6lGcMo0oJPSB4vf/RpiQeY+9W3G
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                            Location="http://172.17.0.1:8080/SingleSignOnService"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                            Location="http://172.17.0.1:8080/SingleSignOnService"/>
+    <saml:Attribute Name="emailAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+                    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"/>
+    <saml:Attribute Name="firstName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+                    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"/>
+  </md:IDPSSODescriptor>
+</md:EntityDescriptor>
